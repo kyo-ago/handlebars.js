@@ -205,7 +205,7 @@ case 4:this.$ = new yy.ProgramNode($$[$0-1], []);
 break;
 case 5:this.$ = new yy.ProgramNode($$[$0]);
 break;
-case 6:this.$ = new yy.ProgramNode([], []);
+case 6:this.$ = new yy.ProgramNode([]);
 break;
 case 7:this.$ = new yy.ProgramNode([]);
 break;
@@ -1665,10 +1665,10 @@ JavaScriptCompiler.prototype = {
   // [lookupData]
   //
   // On stack, before: ...
-  // On stack, after: data[id], ...
+  // On stack, after: data, ...
   //
-  // Push the result of looking up `id` on the current data
-  lookupData: function(id) {
+  // Push the data lookup operator
+  lookupData: function() {
     this.push('data');
   },
 

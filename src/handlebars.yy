@@ -24,7 +24,7 @@ program
   | statements simpleInverse statements -> new yy.ProgramNode($1, $2, $3)
   | statements simpleInverse -> new yy.ProgramNode($1, $2, [])
   | statements -> new yy.ProgramNode($1)
-  | simpleInverse -> new yy.ProgramNode([], [])
+  | simpleInverse -> new yy.ProgramNode([])
   | "" -> new yy.ProgramNode([])
   ;
 
