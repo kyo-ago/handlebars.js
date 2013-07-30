@@ -197,11 +197,11 @@ var $0 = $$.length - 1;
 switch (yystate) {
 case 1: return new yy.ProgramNode($$[$0-1]); 
 break;
-case 2:this.$ = new yy.ProgramNode([], $$[$0]);
+case 2:this.$ = new yy.ProgramNode([], $$[$0-1], $$[$0]);
 break;
-case 3:this.$ = new yy.ProgramNode($$[$0-2], $$[$0]);
+case 3:this.$ = new yy.ProgramNode($$[$0-2], $$[$0-1], $$[$0]);
 break;
-case 4:this.$ = new yy.ProgramNode($$[$0-1], []);
+case 4:this.$ = new yy.ProgramNode($$[$0-1], $$[$0], []);
 break;
 case 5:this.$ = new yy.ProgramNode($$[$0]);
 break;
@@ -225,19 +225,19 @@ case 14:this.$ = new yy.ContentNode($$[$0]);
 break;
 case 15:this.$ = new yy.CommentNode($$[$0]);
 break;
-case 16:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
+case 16:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2], stripFlags($$[$0-2], $$[$0]));
 break;
-case 17:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
+case 17:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2], stripFlags($$[$0-2], $$[$0]));
 break;
-case 18:this.$ = $$[$0-1];
+case 18:this.$ = {path: $$[$0-1], strip: stripFlags($$[$0-2], $$[$0])};
 break;
-case 19:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
+case 19:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2], stripFlags($$[$0-2], $$[$0]));
 break;
-case 20:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
+case 20:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2], stripFlags($$[$0-2], $$[$0]));
 break;
-case 21:this.$ = new yy.PartialNode($$[$0-2], $$[$0-1]);
+case 21:this.$ = new yy.PartialNode($$[$0-2], $$[$0-1], stripFlags($$[$0-3], $$[$0]));
 break;
-case 22: 
+case 22:this.$ = stripFlags($$[$0-1], $$[$0]);
 break;
 case 23:this.$ = [[$$[$0-2]].concat($$[$0-1]), $$[$0]];
 break;
@@ -390,6 +390,15 @@ parse: function parse(input) {
     return true;
 }
 };
+
+
+function stripFlags(open, close) {
+  return {
+    left: open[2] === '(',
+    right: close[0] === ')' || close[1] === ')'
+  };
+}
+
 /* Jison generated lexer */
 var lexer = (function(){
 var lexer = ({EOF:1,
@@ -643,7 +652,7 @@ case 31:return 5;
 break;
 }
 };
-lexer.rules = [/^(?:\\\\(?=(\{\{)))/,/^(?:[^\x00]*?(?=(\{\{)))/,/^(?:[^\x00]+)/,/^(?:[^\x00]{2,}?(?=(\{\{|$)))/,/^(?:[\s\S]*?--\}\})/,/^(?:\{\{>)/,/^(?:\{\{#)/,/^(?:\{\{\/)/,/^(?:\{\{\^)/,/^(?:\{\{\s*else\b)/,/^(?:\{\{\{)/,/^(?:\{\{&)/,/^(?:\{\{!--)/,/^(?:\{\{![\s\S]*?\}\})/,/^(?:\{\{)/,/^(?:=)/,/^(?:\.\.)/,/^(?:\.(?=([=}\s\/.])))/,/^(?:[\/.])/,/^(?:\s+)/,/^(?:\}\}\})/,/^(?:\}\})/,/^(?:"(\\["]|[^"])*")/,/^(?:'(\\[']|[^'])*')/,/^(?:@)/,/^(?:true(?=([}\s])))/,/^(?:false(?=([}\s])))/,/^(?:-?[0-9]+(?=([}\s])))/,/^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=}\s\/.]))))/,/^(?:\[[^\]]*\])/,/^(?:.)/,/^(?:$)/];
+lexer.rules = [/^(?:\\\\(?=(\{\{)))/,/^(?:[^\x00]*?(?=(\{\{)))/,/^(?:[^\x00]+)/,/^(?:[^\x00]{2,}?(?=(\{\{|$)))/,/^(?:[\s\S]*?--\}\})/,/^(?:\{\{(\()?>)/,/^(?:\{\{(\()?#)/,/^(?:\{\{(\()?\/)/,/^(?:\{\{(\()?\^)/,/^(?:\{\{(\()?\s*else\b)/,/^(?:\{\{(\()?\{)/,/^(?:\{\{(\()?&)/,/^(?:\{\{!--)/,/^(?:\{\{![\s\S]*?\}\})/,/^(?:\{\{(\()?)/,/^(?:=)/,/^(?:\.\.)/,/^(?:\.(?=([=)}\s\/.])))/,/^(?:[\/.])/,/^(?:\s+)/,/^(?:\}(\))?\}\})/,/^(?:(\))?\}\})/,/^(?:"(\\["]|[^"])*")/,/^(?:'(\\[']|[^'])*')/,/^(?:@)/,/^(?:true(?=([)}\s])))/,/^(?:false(?=([)}\s])))/,/^(?:-?[0-9]+(?=([)}\s])))/,/^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=)}\s\/.]))))/,/^(?:\[[^\]]*\])/,/^(?:.)/,/^(?:$)/];
 lexer.conditions = {"mu":{"rules":[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],"inclusive":false},"emu":{"rules":[3],"inclusive":false},"com":{"rules":[4],"inclusive":false},"INITIAL":{"rules":[0,1,2,31],"inclusive":true}};
 return lexer;})()
 parser.lexer = lexer;
@@ -666,17 +675,26 @@ Handlebars.parse = function(input) {
 // lib/handlebars/compiler/ast.js
 Handlebars.AST = {};
 
-Handlebars.AST.ProgramNode = function(statements, inverse) {
+Handlebars.AST.ProgramNode = function(statements, inverseStrip, inverse) {
   this.type = "program";
   this.statements = statements;
-  if(inverse) { this.inverse = new Handlebars.AST.ProgramNode(inverse); }
+  this.strip = {};
+
+  if(inverse) {
+    this.inverse = new Handlebars.AST.ProgramNode(inverse, inverseStrip);
+    this.strip.right = inverseStrip.left;
+  } else if (inverseStrip) {
+    this.strip.left = inverseStrip.right;
+  }
 };
 
-Handlebars.AST.MustacheNode = function(rawParams, hash, open) {
+Handlebars.AST.MustacheNode = function(rawParams, hash, open, strip) {
   this.type = "mustache";
   this.hash = hash;
+  this.strip = strip;
 
-  this.escaped = open[2] !== '{' && open[2] !== '&';
+  var escapeFlag = open[3] || open[2];
+  this.escaped = escapeFlag !== '{' && escapeFlag !== '&';
 
   var id = this.id = rawParams[0];
   var params = this.params = rawParams.slice(1);
@@ -695,15 +713,16 @@ Handlebars.AST.MustacheNode = function(rawParams, hash, open) {
   // pass or at runtime.
 };
 
-Handlebars.AST.PartialNode = function(partialName, context) {
+Handlebars.AST.PartialNode = function(partialName, context, strip) {
   this.type         = "partial";
   this.partialName  = partialName;
   this.context      = context;
+  this.strip = strip;
 };
 
 Handlebars.AST.BlockNode = function(mustache, program, inverse, close) {
-  if(mustache.id.original !== close.original) {
-    throw new Handlebars.Exception(mustache.id.original + " doesn't match " + close.original);
+  if(mustache.id.original !== close.path.original) {
+    throw new Handlebars.Exception(mustache.id.original + " doesn't match " + close.path.original);
   }
 
   this.type = "block";
@@ -711,7 +730,15 @@ Handlebars.AST.BlockNode = function(mustache, program, inverse, close) {
   this.program  = program;
   this.inverse  = inverse;
 
-  if (this.inverse && !this.program) {
+  this.strip = {
+    left: mustache.strip.left,
+    right: close.strip.right
+  };
+
+  (program || inverse).strip.left = mustache.strip.right;
+  (inverse || program).strip.right = close.strip.left;
+
+  if (inverse && !program) {
     this.isInverse = true;
   }
 };
@@ -938,6 +965,7 @@ Compiler.prototype = {
   guid: 0,
 
   compile: function(program, options) {
+    this.opcodes = [];
     this.children = [];
     this.depths = {list: []};
     this.options = options;
@@ -959,20 +987,30 @@ Compiler.prototype = {
       }
     }
 
-    return this.program(program);
+    return this.accept(program);
   },
 
   accept: function(node) {
-    return this[node.type](node);
+    var strip = node.strip || {},
+        ret;
+    if (strip.left) {
+      this.opcode('strip');
+    }
+
+    ret = this[node.type](node);
+
+    if (strip.right) {
+      this.opcode('strip');
+    }
+
+    return ret;
   },
 
   program: function(program) {
-    var statements = program.statements, statement;
-    this.opcodes = [];
+    var statements = program.statements;
 
     for(var i=0, l=statements.length; i<l; i++) {
-      statement = statements[i];
-      this[statement.type](statement);
+      this.accept(statements[i]);
     }
     this.isSimple = l === 1;
 
@@ -1398,18 +1436,17 @@ JavaScriptCompiler.prototype = {
       } else {
         this[opcode.opcode].apply(this, opcode.args);
       }
+
+      // Reset the stripNext flag if it was not set by this operation.
+      if (opcode.opcode !== this.stripNext) {
+        this.stripNext = false;
+      }
     }
 
+    // Flush any trailing content that might be pending.
+    this.pushSource('');
+
     return this.createFunctionContext(asObject);
-  },
-
-  nextOpcode: function() {
-    var opcodes = this.environment.opcodes;
-    return opcodes[this.i + 1];
-  },
-
-  eat: function() {
-    this.i = this.i + 1;
   },
 
   preamble: function() {
@@ -1464,7 +1501,7 @@ JavaScriptCompiler.prototype = {
     }
 
     if (!this.environment.isSimple) {
-      this.source.push("return buffer;");
+      this.pushSource("return buffer;");
     }
 
     var params = this.isChild ? ["depth0", "data"] : ["Handlebars", "depth0", "helpers", "partials", "data"];
@@ -1555,7 +1592,7 @@ JavaScriptCompiler.prototype = {
     // Use the options value generated from the invocation
     params[params.length-1] = 'options';
 
-    this.source.push("if (!" + this.lastHelper + ") { " + current + " = blockHelperMissing.call(" + params.join(", ") + "); }");
+    this.pushSource("if (!" + this.lastHelper + ") { " + current + " = blockHelperMissing.call(" + params.join(", ") + "); }");
   },
 
   // [appendContent]
@@ -1565,7 +1602,28 @@ JavaScriptCompiler.prototype = {
   //
   // Appends the string value of `content` to the current buffer
   appendContent: function(content) {
-    this.source.push(this.appendToBuffer(this.quotedString(content)));
+    if (this.pendingContent) {
+      content = this.pendingContent + content;
+    }
+    if (this.stripNext) {
+      content = content.replace(/^\s+/, '');
+    }
+
+    this.pendingContent = content;
+  },
+
+  // [strip]
+  //
+  // On stack, before: ...
+  // On stack, after: ...
+  //
+  // Removes any trailing whitespace from the prior content node and flags
+  // the next operation for stripping if it is a content node.
+  strip: function() {
+    if (this.pendingContent) {
+      this.pendingContent = this.pendingContent.replace(/\s+$/, '');
+    }
+    this.stripNext = 'strip';
   },
 
   // [append]
@@ -1582,9 +1640,9 @@ JavaScriptCompiler.prototype = {
     // when we examine local
     this.flushInline();
     var local = this.popStack();
-    this.source.push("if(" + local + " || " + local + " === 0) { " + this.appendToBuffer(local) + " }");
+    this.pushSource("if(" + local + " || " + local + " === 0) { " + this.appendToBuffer(local) + " }");
     if (this.environment.isSimple) {
-      this.source.push("else { " + this.appendToBuffer("''") + " }");
+      this.pushSource("else { " + this.appendToBuffer("''") + " }");
     }
   },
 
@@ -1597,7 +1655,7 @@ JavaScriptCompiler.prototype = {
   appendEscaped: function() {
     this.context.aliases.escapeExpression = 'this.escapeExpression';
 
-    this.source.push(this.appendToBuffer("escapeExpression(" + this.popStack() + ")"));
+    this.pushSource(this.appendToBuffer("escapeExpression(" + this.popStack() + ")"));
   },
 
   // [getContext]
@@ -1821,8 +1879,8 @@ JavaScriptCompiler.prototype = {
     var nonHelper = this.nameLookup('depth' + this.lastContext, name, 'context');
     var nextStack = this.nextStack();
 
-    this.source.push('if (' + nextStack + ' = ' + helperName + ') { ' + nextStack + ' = ' + nextStack + '.call(' + helper.callParams + '); }');
-    this.source.push('else { ' + nextStack + ' = ' + nonHelper + '; ' + nextStack + ' = typeof ' + nextStack + ' === functionType ? ' + nextStack + '.apply(depth0) : ' + nextStack + '; }');
+    this.pushSource('if (' + nextStack + ' = ' + helperName + ') { ' + nextStack + ' = ' + nextStack + '.call(' + helper.callParams + '); }');
+    this.pushSource('else { ' + nextStack + ' = ' + nonHelper + '; ' + nextStack + ' = typeof ' + nextStack + ' === functionType ? ' + nextStack + '.apply(depth0) : ' + nextStack + '; }');
   },
 
   // [invokePartial]
@@ -1929,7 +1987,7 @@ JavaScriptCompiler.prototype = {
 
   register: function(name, val) {
     this.useRegister(name);
-    this.source.push(name + " = " + val + ";");
+    this.pushSource(name + " = " + val + ";");
   },
 
   useRegister: function(name) {
@@ -1943,12 +2001,23 @@ JavaScriptCompiler.prototype = {
     return this.push(new Literal(item));
   },
 
+  pushSource: function(source) {
+    if (this.pendingContent) {
+      this.source.push(this.appendToBuffer(this.quotedString(this.pendingContent)));
+      this.pendingContent = undefined;
+    }
+
+    if (source) {
+      this.source.push(source);
+    }
+  },
+
   pushStack: function(item) {
     this.flushInline();
 
     var stack = this.incrStack();
     if (item) {
-      this.source.push(stack + " = " + item + ";");
+      this.pushSource(stack + " = " + item + ";");
     }
     this.compileStack.push(stack);
     return stack;
@@ -1991,7 +2060,7 @@ JavaScriptCompiler.prototype = {
         stack = this.nextStack();
       }
 
-      this.source.push(stack + " = (" + prefix + item + ");");
+      this.pushSource(stack + " = (" + prefix + item + ");");
     }
     return stack;
   },
