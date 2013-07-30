@@ -225,18 +225,15 @@ case 14:this.$ = new yy.ContentNode($$[$0]);
 break;
 case 15:this.$ = new yy.CommentNode($$[$0]);
 break;
-case 16:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1]);
+case 16:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
 break;
-case 17:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1]);
+case 17:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
 break;
 case 18:this.$ = $$[$0-1];
 break;
-case 19:
-    // Parsing out the '&' escape token at this level saves ~500 bytes after min due to the removal of one parser node.
-    this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2][2] === '&');
-  
+case 19:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
 break;
-case 20:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], true);
+case 20:this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], $$[$0-2]);
 break;
 case 21:this.$ = new yy.PartialNode($$[$0-2], $$[$0-1]);
 break;
@@ -675,10 +672,11 @@ Handlebars.AST.ProgramNode = function(statements, inverse) {
   if(inverse) { this.inverse = new Handlebars.AST.ProgramNode(inverse); }
 };
 
-Handlebars.AST.MustacheNode = function(rawParams, hash, unescaped) {
+Handlebars.AST.MustacheNode = function(rawParams, hash, open) {
   this.type = "mustache";
-  this.escaped = !unescaped;
   this.hash = hash;
+
+  this.escaped = open[2] !== '{' && open[2] !== '&';
 
   var id = this.id = rawParams[0];
   var params = this.params = rawParams.slice(1);
