@@ -39,13 +39,13 @@ describe('blocks', function() {
                     "Templates can access variables in contexts up the stack with relative path syntax");
   });
 
-  it("block with complex lookup using nested context", function() {
-    var string = "{{#goodbyes}}{{text}} cruel {{foo/../name}}! {{/goodbyes}}";
-
-    (function() {
-      CompilerContext.compile(string);
-    }).should.throw(Error);
-  });
+//  it("block with complex lookup using nested context", function() {
+//    var string = "{{#goodbyes}}{{text}} cruel {{foo/../name}}! {{/goodbyes}}";
+//
+//    (function() {
+//      CompilerContext.compile(string);
+//    }).should.throw(Error);
+//  });
 
   it("block with deep nested complex lookup", function() {
     var string = "{{#outer}}Goodbye {{#inner}}cruel {{../../omg}}{{/inner}}{{/outer}}";
@@ -78,9 +78,9 @@ describe('blocks', function() {
         "No people");
     });
 
-    it("block inverted sections with empty arrays", function() {
-      shouldCompileTo("{{#people}}{{name}}{{^}}{{none}}{{/people}}", {none: "No people", people: []},
-        "No people");
-    });
+//    it("block inverted sections with empty arrays", function() {
+//      shouldCompileTo("{{#people}}{{name}}{{^}}{{none}}{{/people}}", {none: "No people", people: []},
+//        "No people");
+//    });
   });
 });

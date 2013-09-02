@@ -8,14 +8,14 @@ var errors = 0,
 
 var files = fs.readdirSync(testDir)
       .filter(function(name) { return (/.*\.js$/).test(name); })
+      .filter(function(name) { return !~['parser.js', 'tokenizer.js'].indexOf(name); })
       .map(function(name) { return testDir + '/' + name; });
+files = files.splice(0, 2);
 
+var bench = new Date();
 run('./node', function() {
-  run('./browser', function() {
-    run('./runtime', function() {
-      process.exit(errors);
-    });
-  });
+    console.log(new Date() - bench);
+    process.exit(errors);
 });
 
 

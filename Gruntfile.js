@@ -63,12 +63,35 @@ module.exports = function(grunt) {
         src: 'dist/<%= pkg.name %>.runtime.js',
         dest: 'dist/<%= pkg.name %>.runtime.min.js'
       }
+    },
+    watch: {
+      scripts: {
+        files: [
+          'lib/handlebars/compiler/compiler.js',
+          'spec/*.js'
+        ],
+        tasks: ['shell'],
+        options: {
+          spawn: false
+        }
+      }
+    },
+    shell: {
+      nodeTest: {
+        options: {
+          stdout: true,
+          stderr: true
+        },
+        command: 'npm test'
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.loadTasks('tasks');
 
@@ -91,4 +114,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['jshint', 'parser', 'dist-dir', 'concat', 'uglify', 'test']);
   grunt.registerTask('default', 'build');
+  grunt.registerTask('default', 'build');
+  grunt.registerTask('watchTest', ['shell', 'watch']);
 };
